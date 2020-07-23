@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a45b0eec18046275cc26a2988108b258",
+    "content-hash": "af4dc347e6d2bebb02b1c86d1574ac5c",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -96,7 +96,7 @@
             "version": "3.5.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery-dist.git",
+                "url": "https://github.com/jquery/jquery-dist.git",
                 "reference": "4c0e4becb8263bb5b3e6dadc448d8e7305ef8215"
             },
             "dist": {
@@ -2194,16 +2194,16 @@
         },
         {
             "name": "kartik-v/yii2-widget-timepicker",
-            "version": "v1.0.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-timepicker.git",
-                "reference": "c1dacfc3712bedf4f694d878279189e440a24b21"
+                "reference": "27847bf0a3178d8ce526fe8a0f97832956ce8e45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-timepicker/zipball/c1dacfc3712bedf4f694d878279189e440a24b21",
-                "reference": "c1dacfc3712bedf4f694d878279189e440a24b21",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-timepicker/zipball/27847bf0a3178d8ce526fe8a0f97832956ce8e45",
+                "reference": "27847bf0a3178d8ce526fe8a0f97832956ce8e45",
                 "shasum": ""
             },
             "require": {
@@ -2244,7 +2244,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2018-10-09T11:58:19+00:00"
+            "time": "2019-05-25T07:33:17+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-touchspin",
@@ -7627,7 +7627,8 @@
         "mootensai/yii2-enhanced-gii": 20,
         "kartik-v/yii2-mpdf": 20,
         "kartik-v/yii2-tree-manager": 20,
-        "kartik-v/yii2-datecontrol": 20
+        "kartik-v/yii2-datecontrol": 20,
+        "kartik-v/yii2-widget-timepicker": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -46,26 +46,32 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="row">
-<?php
-if($providerRisorsa->totalCount){
-    $gridColumnRisorsa = [
-        ['class' => 'yii\grid\SerialColumn'],
-            ['attribute' => 'id', 'visible' => false],
-                        'nome',
+      <div class="clo-md-12">
+        <?= $this->render('_formOrario', [
+            'modelStruttura' => $model,
+            'model' => $modelOrario,
+        ]) ?>
+      </div>
+    </div>
+    <?php
+    $gridColumnOrario = [
+        ['attribute' => 'id', 'visible' => false],
+        'giorno',
+        'inizio_orario',
+        'fine_orario',
+        'data_inizio',
+        'data_fine',
     ];
-    echo Gridview::widget([
-        'dataProvider' => $providerRisorsa,
+
+    echo GridView::widget([
+        'dataProvider' => $providerOrario,
+        'columns' => $gridColumnOrario,
         'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-risorsa']],
+        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-orario']],
         'panel' => [
             'type' => GridView::TYPE_PRIMARY,
-            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Risorsa'),
+            'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
         ],
-        'export' => false,
-        'columns' => $gridColumnRisorsa
     ]);
-}
-?>
-
-    </div>
+    ?>
 </div>
