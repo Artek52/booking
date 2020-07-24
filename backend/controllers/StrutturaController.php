@@ -71,39 +71,39 @@ class StrutturaController extends Controller
         $modelOrario->save();
       }
       else
-        Yii::$app->session->addFlash('error', "Dati in conflitto");
+      Yii::$app->session->addFlash('error', "Dati in conflitto");
 
     }
 
-$providerRisorsa = new \yii\data\ArrayDataProvider([
-  'allModels' => $model->risorse,
-]);
+    $providerRisorsa = new \yii\data\ArrayDataProvider([
+      'allModels' => $model->risorse,
+    ]);
 
-$providerOrario = new \yii\data\ArrayDataProvider([
-  'allModels' => $model->orari,
-]);
+    $providerOrario = new \yii\data\ArrayDataProvider([
+      'allModels' => $model->orari,
+    ]);
 
-return $this->render('view', [
-  'model' => $this->findModel($id),
-  'modelOrario' => $modelOrario,
-  'providerOrario' => $providerOrario,
-  'providerRisorsa' => $providerRisorsa,
-]);
-}
+    return $this->render('view', [
+      'model' => $this->findModel($id),
+      'modelOrario' => $modelOrario,
+      'providerOrario' => $providerOrario,
+      'providerRisorsa' => $providerRisorsa,
+    ]);
+  }
 
-private function isOrarioInConflitto($model) {
+  private function isOrarioInConflitto($model) {
 
-  $conflitti= \backend\models\Orario::find()
-  ->andWhere(['giorno' => $model->giorno])
-  ->andWhere(['struttura_id' => $model->struttura_id])
-  ->andWhere(['OR',
+    $conflitti= \backend\models\Orario::find()
+    ->andWhere(['giorno' => $model->giorno])
+    ->andWhere(['struttura_id' => $model->struttura_id])
+    ->andWhere(['OR',
+    ['AND',
+    ['>=','data_inizio',$model->data_inizio],
+    ['<','data_inizio',$model->data_fine]
+  ],
   ['AND',
-  ['>=','data_inizio',$model->data_inizio],
-  ['<','data_inizio',$model->data_fine]
-],
-['AND',
-['>','data_fine',$model->data_inizio],
-['<=','data_fine',$model->data_fine]
+  ['>','data_fine',$model->data_inizio],
+  ['<=','data_fine',$model->data_fine]
 ],
 ])
 ->andWhere(['OR',
@@ -118,14 +118,14 @@ private function isOrarioInConflitto($model) {
 ]);
 
 if ($model->risorsa_id!=null) {
-$conflitti->andWhere(['risorsa_id'=>$model->risorsa_id]);
+  $conflitti->andWhere(['risorsa_id'=>$model->risorsa_id]);
 }
 if ($model->id!=null) {
-$conflitti->andWhere(['<>','id',$model->id]);
+  $conflitti->andWhere(['<>','id',$model->id]);
 }
 
 if ($conflitti->count() >0) {
-return true;
+  return true;
 }
 return false;
 }

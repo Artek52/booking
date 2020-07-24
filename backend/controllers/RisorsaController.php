@@ -61,6 +61,30 @@ class RisorsaController extends Controller
      */
     public function actionView($id)
     {
+      $model = $this->findModel($id);
+      $modelOrario = new \backend\models\Orario();
+
+      if ($modelOrario->load(Yii::$app->request->post())) {
+        $modelOrario->risorsa_id=$model->id;
+        if(!$this->isOrarioInConflitto($modelOrario))
+        {
+          $modelOrario->save();
+        }
+        else
+        Yii::$app->session->addFlash('error', "Dati in conflitto");
+
+      }
+
+
+      $providerOrario = new \yii\data\ArrayDataProvider([
+        'allModels' => $model->orari,
+      ]);
+
+      return $this->render('view', [
+        'model' => $this->findModel($id),
+        'modelOrario' => $modelOrario,
+        'providerOrario' => $providerOrario,
+      ]);
 
         $model = $this->findModel($id);
 
@@ -90,6 +114,46 @@ class RisorsaController extends Controller
             ]);
         }
     }
+
+
+    private function isOrarioInConflitto($model) {
+
+      $conflitti= \backend\models\Orario::find()
+      ->andWhere(['giorno' => $model->giorno])
+      ->andWhere(['struttura_id' => $model->struttura_id])
+      ->andWhere(['OR',
+      ['AND',
+      ['>=','data_inizio',$model->data_inizio],
+      ['<','data_inizio',$model->data_fine]
+    ],
+    ['AND',
+    ['>','data_fine',$model->data_inizio],
+    ['<=','data_fine',$model->data_fine]
+  ],
+  ])
+  ->andWhere(['OR',
+  ['AND',
+  ['>=','inizio_orario',$model->inizio_orario],
+  ['<','inizio_orario',$model->fine_orario]
+  ],
+  ['AND',
+  ['>','fine_orario',$model->inizio_orario],
+  ['<=','fine_orario',$model->fine_orario]
+  ],
+  ]);
+
+  // if ($model->risorsa_id!=null) {
+  //   $conflitti->andWhere(['risorsa_id'=>$model->risorsa_id]);
+  // }
+  if ($model->id!=null) {
+    $conflitti->andWhere(['<>','id',$model->id]);
+  }
+
+  if ($conflitti->count() >0) {
+    return true;
+  }
+  return false;
+  }
 
     /**
      * Creates a new Risorsa model.

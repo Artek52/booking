@@ -100,7 +100,7 @@ class OrarioController extends Controller
             $conflitti->andWhere(['<>','id',$model->id]);
         }
 
-        if ($conflitti->count() >0) {
+        if (!$conflitti->count() >0) {
             return true;
         }
         return false;
@@ -116,8 +116,8 @@ class OrarioController extends Controller
         $model = new Orario();
         if ($model->load(Yii::$app->request->post()) ) {
 
-          if($this->isOrarioInConflitto($model)){
-            die("CONFLITTO");
+          if(!$this->isOrarioInConflitto($model)){
+            Yii::$app->session->addFlash('error', "Dati in conflitto");
           }else{
             if($model->save()){
               $this->redirect(['index', 'id' => $model->id]);

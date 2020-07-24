@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use kartik\widgets\TimePicker;
+
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Orario */
@@ -41,31 +43,39 @@ use yii\bootstrap\ActiveForm;
   <div class="row">
 
     <div class="col-md-2">
-      <?= $form->field($model, 'inizio_orario')->widget(\kartik\datecontrol\DateControl::className(), [
-          'type' => \kartik\datecontrol\DateControl::FORMAT_TIME,
-          'saveFormat' => 'php:H:i:s',
-          'ajaxConversion' => true,
-          'options' => [
-              'pluginOptions' => [
-                  'placeholder' => 'Choose Inizio Orario',
-                  'autoclose' => true
-              ]
-          ]
-      ]); ?>
+
+      <?= $form->field($model, 'giorno')->dropdownList([
+        'lunedi' => 'lunedi',
+        'martedi' => 'martedi',
+        'mercoledi' => 'mercoledi',
+        'giovedi' => 'giovedi',
+        'venerdi' => 'venerdi',
+        'sabato' => 'sabato',
+        'domenica' => 'domenica'
+      ]);
+      ?>
     </div>
 
-  <div class="col-md-2">
-    <?= $form->field($model, 'fine_orario')->widget(\kartik\datecontrol\DateControl::className(), [
-        'type' => \kartik\datecontrol\DateControl::FORMAT_TIME,
-        'saveFormat' => 'php:H:i:s',
-        'ajaxConversion' => true,
-        'options' => [
-            'pluginOptions' => [
-                'placeholder' => 'Choose Fine Orario',
-                'autoclose' => true
-            ]
+    <div class="col-md-2">
+      <?= $form->field($model, 'inizio_orario')->widget(TimePicker::classname(),
+      [
+        'pluginOptions' => [
+          'showSeconds' => false,
+          'showMeridian' => false,
+          'minuteStep' => 15,
         ]
-    ]); ?>
+        ])->label("dalle"); ?>
+      </div>
+
+      <div class="col-md-2">
+        <?= $form->field($model, 'fine_orario')->widget(TimePicker::classname(),
+        [
+          'pluginOptions' => [
+            'showSeconds' => false,
+            'showMeridian' => false,
+            'minuteStep' => 15,
+          ]
+          ])->label("alle"); ?>
   </div>
 
     <div class="col-md-2">

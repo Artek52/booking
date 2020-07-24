@@ -125,6 +125,14 @@ class Risorsa extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrari()
+    {
+        return $this->hasMany(\backend\models\Orario::className(), ['risorsa_id' => 'id']);
+    }
+
+    /**
      * @inheritdoc
      * @return array mixed
      */
