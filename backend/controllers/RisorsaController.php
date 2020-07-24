@@ -61,18 +61,34 @@ class RisorsaController extends Controller
      */
     public function actionView($id)
     {
+
         $model = $this->findModel($id);
-        $providerDisponibilita = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->disponibilitas,
+
+        $modelOrario = new \backend\models\Orario();
+
+        $providerOrario = new \yii\data\ArrayDataProvider([
+          'allModels' => $model->getOrari(),
         ]);
-        $providerPrenotazione = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->prenotaziones,
-        ]);
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'providerDisponibilita' => $providerDisponibilita,
-            'providerPrenotazione' => $providerPrenotazione,
-        ]);
+
+        // $providerRisorsa = new \yii\data\ArrayDataProvider([
+        //   'allModels' => $model->get(),
+        // ]);
+
+        if ($modelOrario->load(Yii::$app->request->post())) {
+          $modelOrario->risorsa_id = $model->id;
+
+          if(!$this->isOrarioInConflitto($modelOrario))
+            $modelOrario->save();
+          else
+            Yii::$app->session->addFlash('error', "Dati in conflitto");
+        }
+        else {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+                'modelOrario' => $modelOrario,
+                'providerOrario' => $providerOrario
+            ]);
+        }
     }
 
     /**
@@ -187,4 +203,40 @@ class RisorsaController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-}
+
+    private function isOrarioInConflitto($model) {
+
+      $conflitti= \backend\models\Orario::find()
+      ->andWhere(['giorno' => $model->giorno])
+      ->andWhere(['struttura_id' => $model->struttura_id])
+      ->andWhere(['OR',
+      ['AND',
+      ['>=','data_inizio',$model->data_inizio],
+      ['<','data_inizio',$model->data_fine]
+    ],
+    ['AND',
+    ['>','data_fine',$model->data_inizio],
+    ['<=','data_fine',$model->data_fine]
+    ],
+    ])
+    ->andWhere(['OR',
+    ['AND',
+    ['>=','inizio_orario',$model->inizio_orario],
+    ['<','inizio_orario',$model->fine_orario]
+    ],
+    ['AND',
+    ['>','fine_orario',$model->inizio_orario],
+    ['<=','fine_orario',$model->fine_orario]
+    ],
+    ]);
+
+    if ($model->id!=null) {
+    $conflitti->andWhere(['<>','id',$model->id]);
+    }
+
+    if ($conflitti->count() >0) {
+    return true;
+    }
+    return false;
+    }
+    }
