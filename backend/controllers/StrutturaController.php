@@ -64,12 +64,14 @@ class StrutturaController extends Controller
     $model = $this->findModel($id);
     $modelOrario = new \backend\models\Orario();
 
+
+    // Fine Orario
+    $model->save();
+
     if ($modelOrario->load(Yii::$app->request->post())) {
       $modelOrario->struttura_id=$model->id;
       if(!$this->isOrarioInConflitto($modelOrario))
-      {
         $modelOrario->save();
-      }
       else
       Yii::$app->session->addFlash('error', "Dati in conflitto");
 

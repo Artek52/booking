@@ -162,7 +162,6 @@ class m200720_094326_create_tables extends Migration
           "orario_23_15" => Schema::TYPE_INTEGER,
           "orario_23_30" => Schema::TYPE_INTEGER,
           "orario_23_45" => Schema::TYPE_INTEGER,
-          "orario_24_00" => Schema::TYPE_INTEGER,
           "created_at" => Schema::TYPE_DATETIME,
           "updated_at" => Schema::TYPE_DATETIME,
           "created_by" => Schema::TYPE_INTEGER,
