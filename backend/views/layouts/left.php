@@ -30,7 +30,7 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
-                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
+                    ['label' => 'Menu', 'options' => ['class' => 'header']],
                     ["label" => "Disponibilita", 'url' => ['/disponibilita']],
                     ["label" => "Prenotazioni", 'url' => ['/prenotazione']],
                     ["label" => "Orari", 'url' => ['/orario']],

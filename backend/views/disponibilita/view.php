@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <h2><?= 'Disponibilita'.' '. Html::encode($this->title) ?></h2>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
-            
+
             <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('Delete', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="row">
-<?php 
+<?php
     $gridColumn = [
         ['attribute' => 'id', 'visible' => false],
         [
@@ -136,7 +136,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'orario_23_15',
         'orario_23_30',
         'orario_23_45',
-        'orario_24_00',
     ];
     echo DetailView::widget([
         'model' => $model,
@@ -147,7 +146,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <h4>Risorsa<?= ' '. Html::encode($this->title) ?></h4>
     </div>
-    <?php 
+    <?php
     $gridColumnRisorsa = [
         ['attribute' => 'id', 'visible' => false],
         'struttura_id',

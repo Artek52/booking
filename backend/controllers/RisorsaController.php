@@ -72,7 +72,7 @@ class RisorsaController extends Controller
             $data = \DateTime::createFromFormat ("Y-m-d", $modelOrario->data_inizio);
             $dataFine = \DateTime::createFromFormat ("Y-m-d", $modelOrario->data_fine);
             while ($data->diff($dataFine)->format('%a') > 0) {
-                $modelDisponibilita = new Disponibilita();
+                $modelDisponibilita = new \backend\models\Disponibilita();
                 $modelDisponibilita->risorsa_id = $model->id;
                 $modelDisponibilita->data = $data->format('Y-m-d');
 
@@ -87,7 +87,7 @@ class RisorsaController extends Controller
 
                 $data->add(new \DateInterval('P1D'));
             }
-            if(!$this->isOrarioInConflitto($modelOrario)) {
+            if( $this->isOrarioInConflitto($modelOrario)) {
                 $modelOrario->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -140,7 +140,7 @@ if ($model->id!=null) {
     $conflitti->andWhere(['<>','id',$model->id]);
 }
 
-if ($conflitti->count() >0) {
+if (!$conflitti->count() >0) {
     return true;
 }
 return false;

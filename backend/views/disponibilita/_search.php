@@ -229,8 +229,6 @@ use yii\widgets\ActiveForm;
 
     <?php /* echo $form->field($model, 'orario_23_45')->textInput(['placeholder' => 'Orario 23 45']) */ ?>
 
-    <?php /* echo $form->field($model, 'orario_24_00')->textInput(['placeholder' => 'Orario 24 00']) */ ?>
-
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>

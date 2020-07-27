@@ -28,7 +28,7 @@ $this->registerJs($search);
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
     </div>
-    <?php 
+    <?php
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'visible' => false],
@@ -145,11 +145,10 @@ $this->registerJs($search);
         'orario_23_15',
         'orario_23_30',
         'orario_23_45',
-        'orario_24_00',
         [
             'class' => 'yii\grid\ActionColumn',
         ],
-    ]; 
+    ];
     ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

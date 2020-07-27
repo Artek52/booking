@@ -229,8 +229,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'orario_23_45')->textInput(['placeholder' => 'Orario 23 45']) ?>
 
-    <?= $form->field($model, 'orario_24_00')->textInput(['placeholder' => 'Orario 24 00']) ?>
-
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
