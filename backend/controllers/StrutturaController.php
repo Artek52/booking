@@ -62,11 +62,7 @@ class StrutturaController extends Controller
   public function actionView($id)
   {
     $model = $this->findModel($id);
-    $modelOrario = new \backend\models\Orario();
-
-
-    // Fine Orario
-    $model->save();
+    $modelOrario = new \backend\models\Orario();    
 
     if ($modelOrario->load(Yii::$app->request->post())) {
       $modelOrario->struttura_id=$model->id;

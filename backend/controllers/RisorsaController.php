@@ -140,7 +140,7 @@ if ($model->id!=null) {
     $conflitti->andWhere(['<>','id',$model->id]);
 }
 
-if (!$conflitti->count() >0) {
+if ($conflitti->count() >0) {
     return true;
 }
 return false;
