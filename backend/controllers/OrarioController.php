@@ -67,43 +67,20 @@ class OrarioController extends Controller
         ]);
     }
 
-    private function isOrarioInConflitto($model) {
-
-        $conflitti= \backend\models\Orario::find()
-         ->andWhere(['giorno' => $model->giorno])
-         ->andWhere(['struttura_id' => $model->struttura_id])
-        ->andWhere(['OR',
-          ['AND',
-            ['>=','data_inizio',$model->data_inizio],
-            ['<','data_inizio',$model->data_fine]
-          ],
-          ['AND',
-            ['>','data_fine',$model->data_inizio],
-            ['<=','data_fine',$model->data_fine]
-          ],
-        ])
-        ->andWhere(['OR',
-          ['AND',
-            ['>=','inizio_orario',$model->inizio_orario],
-            ['<','inizio_orario',$model->fine_orario]
-          ],
-          ['AND',
-            ['>','fine_orario',$model->inizio_orario],
-            ['<=','fine_orario',$model->fine_orario]
-          ],
-        ]);
-
-        if ($model->risorsa_id!=null) {
-            $conflitti->andWhere(['risorsa_id'=>$model->risorsa_id]);
+    /**
+     * Finds the Orario model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Orario the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Orario::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
-        if ($model->id!=null) {
-            $conflitti->andWhere(['<>','id',$model->id]);
-        }
-
-        if ($conflitti->count() >0) {
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -116,17 +93,56 @@ class OrarioController extends Controller
         $model = new Orario();
         if ($model->load(Yii::$app->request->post()) ) {
 
-          if($this->isOrarioInConflitto($model)){
-            Yii::$app->session->addFlash('error', "Dati in conflitto");
-          }else{
-            if($model->save()){
-              $this->redirect(['index', 'id' => $model->id]);
+            if($this->isOrarioInConflitto($model)){
+                Yii::$app->session->addFlash('error', "Dati in conflitto");
+            }else{
+                if($model->save()){
+                    $this->redirect(['index', 'id' => $model->id]);
+                }
             }
-          }
         }
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    private function isOrarioInConflitto($model) {
+
+        $conflitti= \backend\models\Orario::find()
+            ->andWhere(['giorno' => $model->giorno])
+            ->andWhere(['struttura_id' => $model->struttura_id])
+            ->andWhere(['OR',
+                ['AND',
+                    ['>=','data_inizio',$model->data_inizio],
+                    ['<','data_inizio',$model->data_fine]
+                ],
+                ['AND',
+                    ['>','data_fine',$model->data_inizio],
+                    ['<=','data_fine',$model->data_fine]
+                ],
+            ])
+            ->andWhere(['OR',
+                ['AND',
+                    ['>=','inizio_orario',$model->inizio_orario],
+                    ['<','inizio_orario',$model->fine_orario]
+                ],
+                ['AND',
+                    ['>','fine_orario',$model->inizio_orario],
+                    ['<=','fine_orario',$model->fine_orario]
+                ],
+            ]);
+
+        if ($model->risorsa_id!=null)
+            $conflitti->andWhere(['risorsa_id'=>$model->risorsa_id]);
+
+        if ($model->id!=null)
+            $conflitti->andWhere(['<>','id',$model->id]);
+
+
+        if ($conflitti->count() >0)
+            return true;
+
+        return false;
     }
 
     /**
@@ -140,13 +156,13 @@ class OrarioController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) ) {
-          if($this->isOrarioInConflitto($model)){
-            die("CONFLITTO");
-          }else{
-            if($model->save()){
-              $this->redirect(['index', 'id' => $model->id]);
+            if($this->isOrarioInConflitto($model)){
+                die("CONFLITTO");
+            }else{
+                if($model->save()){
+                    $this->redirect(['index', 'id' => $model->id]);
+                }
             }
-          }
         }
         return $this->render('update', [
             'model' => $model,
@@ -164,22 +180,5 @@ class OrarioController extends Controller
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);
-    }
-
-
-    /**
-     * Finds the Orario model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Orario the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Orario::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }
