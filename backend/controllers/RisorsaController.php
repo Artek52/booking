@@ -65,13 +65,16 @@ class RisorsaController extends Controller
         $model = $this->findModel($id);
         $modelOrario = new \backend\models\Orario();
 
-        if ($modelOrario->load(Yii::$app->request->post())) {
+        if ( $modelOrario->load(Yii::$app->request->post())) {
+          if( ! $this->isOrarioInConflitto($modelOrario)) {
             $modelOrario->struttura_id = $model->struttura_id;
-            $modelOrario->risorsa_id=$model->id;
-
+            $modelOrario->risorsa_id = $model->id;
             $data = \DateTime::createFromFormat ("Y-m-d", $modelOrario->data_inizio);
             $dataFine = \DateTime::createFromFormat ("Y-m-d", $modelOrario->data_fine);
-            while ($data->diff($dataFine)->format('%a') > 0) {
+            $ora_inizio = (integer) str_replace(":", "", $modelOrario->inizio_orario);
+            $ora_fine = (integer) str_replace(":", "", $modelOrario->fine_orario);
+
+            while ($data->diff($dataFine)->format('%r%a') > 0) {
                 $modelDisponibilita = new \backend\models\Disponibilita();
                 $modelDisponibilita->risorsa_id = $model->id;
                 $modelDisponibilita->data = $data->format('Y-m-d');
@@ -79,21 +82,31 @@ class RisorsaController extends Controller
                 for ($i=0; $i <=23 ; $i++) {
                     foreach (['00', '15', '30', '45'] as $y) {
                         $field = 'orario_' . substr('0' . $i, -2) . '_' . $y;
-                        $modelDisponibilita->$field = -1;
-                    }
-                }
+                        $tmp = substr("0" . $i, -2) . ":" . $y;
+                        $ora_attuale = (integer) str_replace(":", "", $tmp);
 
+                        if(($ora_inizio<$ora_attuale)&&($ora_attuale<$ora_fine)){
+                          $modelDisponibilita->$field = 0;
+
+                        }else{
+                          $modelDisponibilita->$field = -1;
+
+                        }
+                    }
+
+                }
                 $modelDisponibilita->save();
 
-                $data->add(new \DateInterval('P1D'));
-            }
-            if( $this->isOrarioInConflitto($modelOrario)) {
+                $data->add(new \DateInterval('P7D'));
+                }
                 $modelOrario->save();
+
                 return $this->redirect(['view', 'id' => $model->id]);
-            } else {
+              } else {
                 Yii::$app->session->addFlash('error', "Dati in conflitto");
+              }
+
             }
-        }
 
         $providerOrario = new \yii\data\ArrayDataProvider([
             'allModels' => $model->orari,
@@ -104,7 +117,8 @@ class RisorsaController extends Controller
             'modelOrario' => $modelOrario,
             'providerOrario' => $providerOrario,
         ]);
-    }
+      }
+
 
 
     private function isOrarioInConflitto($model) {
