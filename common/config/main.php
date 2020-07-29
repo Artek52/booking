@@ -11,3 +11,14 @@ return [
         ],
     ],
 ];
+return [
+'controllerMap' => [
+    'fixture' => [
+        'class' => 'yii\faker\FixtureController',
+        'templatePath' => '/common/tests/data/templates',
+        'fixtureDataPath' => '/common/tests',
+    ],
+    // ...
+],
+// ...
+];
