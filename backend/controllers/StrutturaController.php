@@ -66,7 +66,7 @@ class StrutturaController extends Controller
 
         if ($modelOrario->load(Yii::$app->request->post())) {
             $modelOrario->struttura_id=$model->id;
-            if(!$this->isOrarioInConflitto($modelOrario))
+            if( ! $this->isOrarioInConflitto($modelOrario))
                 $modelOrario->save();
             else
                 Yii::$app->session->addFlash('error', "Dati in conflitto");
@@ -94,37 +94,53 @@ class StrutturaController extends Controller
         $conflitti= \backend\models\Orario::find()
             ->andWhere(['giorno' => $model->giorno])
             ->andWhere(['struttura_id' => $model->struttura_id])
+            ->andWhere(['risorsa_id' => $model->risorsa_id])
             ->andWhere(['OR',
                 ['AND',
-                    ['>=','data_inizio',$model->data_inizio],
-                    ['<','data_inizio',$model->data_fine]
+                  ['>=','data_inizio',$model->data_inizio],
+                  ['<=','data_inizio',$model->data_fine]
                 ],
                 ['AND',
-                    ['>','data_fine',$model->data_inizio],
-                    ['<=','data_fine',$model->data_fine]
-                ],
-            ])
-            ->andWhere(['OR',
-                ['AND',
-                    ['>=','inizio_orario',$model->inizio_orario],
-                    ['<','inizio_orario',$model->fine_orario]
+                  ['>=','data_fine',$model->data_inizio],
+                  ['<=','data_fine',$model->data_fine]
                 ],
                 ['AND',
-                    ['>','fine_orario',$model->inizio_orario],
-                    ['<=','fine_orario',$model->fine_orario]
+                  ['>=','data_inizio',$model->data_inizio],
+                  ['<=','data_fine',$model->data_fine]
                 ],
-            ]);
+                ['AND',
+                  ['<=','data_inizio',$model->data_inizio],
+                  ['>=','data_fine',$model->data_fine]
+                ],
+              ])
+                ->andWhere(['OR',
+                ['AND',
+                  ['>=','inizio_orario',$model->inizio_orario],
+                  ['<=','inizio_orario',$model->fine_orario]
+                ],
+                ['AND',
+                  ['>=','fine_orario',$model->inizio_orario],
+                  ['<=','fine_orario',$model->fine_orario]
+                ],
+                ['AND',
+                  ['>=','inizio_orario',$model->inizio_orario],
+                  ['<=','fine_orario',$model->fine_orario]
+                ],
+                ['AND',
+                  ['<=','inizio_orario',$model->inizio_orario],
+                  ['>=','fine_orario',$model->fine_orario]
+                ],
+              ]);
 
-        if ($model->risorsa_id!=null) {
+        if ($model->risorsa_id!=null)
             $conflitti->andWhere(['risorsa_id'=>$model->risorsa_id]);
-        }
-        if ($model->id!=null) {
-            $conflitti->andWhere(['<>','id',$model->id]);
-        }
 
-        if ($conflitti->count() >0) {
+        if ($model->id!=null)
+            $conflitti->andWhere(['<>','id',$model->id]);
+
+        if ($conflitti->count() >0)
             return true;
-        }
+
         return false;
     }
     /**

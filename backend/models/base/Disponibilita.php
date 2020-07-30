@@ -125,6 +125,7 @@ class Disponibilita extends \yii\db\ActiveRecord
     private $_rt_softrestore;
 
     public function __construct(){
+      if (Yii::$app->id == 'basic') {
         parent::__construct();
         $this->_rt_softdelete = [
             'deleted_by' => \Yii::$app->user->id,
@@ -135,6 +136,7 @@ class Disponibilita extends \yii\db\ActiveRecord
             'deleted_at' => date('Y-m-d H:i:s'),
         ];
     }
+  }
 
     /**
     * This function helps \mootensai\relation\RelationTrait runs faster
