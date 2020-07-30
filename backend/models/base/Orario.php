@@ -38,6 +38,7 @@ class Orario extends \yii\db\ActiveRecord
 
     public function __construct(){
         parent::__construct();
+        if (Yii::$app->id == 'basic') {
         $this->_rt_softdelete = [
             'deleted_by' => \Yii::$app->user->id,
             'deleted_at' => date('Y-m-d H:i:s'),
@@ -46,6 +47,7 @@ class Orario extends \yii\db\ActiveRecord
             'deleted_by' => 0,
             'deleted_at' => date('Y-m-d H:i:s'),
         ];
+      }
     }
 
     /**
