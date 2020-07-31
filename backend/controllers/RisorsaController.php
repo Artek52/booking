@@ -168,7 +168,6 @@ class RisorsaController extends Controller
         if ($model->id!=null)
             $conflitti->andWhere(['<>','id',$model->id]);
 
-
         if ($conflitti->count() >0)
             return true;
 
@@ -224,7 +223,6 @@ class RisorsaController extends Controller
 
         return $this->redirect(['index']);
     }
-
 
     /**
      * Finds the Risorsa model based on its primary key value.

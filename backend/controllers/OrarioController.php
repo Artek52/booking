@@ -155,7 +155,6 @@ class OrarioController extends Controller
         if ($model->id!=null)
             $conflitti->andWhere(['<>','id',$model->id]);
 
-
         if ($conflitti->count() >0)
             return true;
 

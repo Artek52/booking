@@ -1,0 +1,39 @@
+<div class="row">
+
+  <div class="col-md-1">
+    <?= $form->field($model, 'giorno')->checkbox(array('label'=>'lunedi'))
+    ->label('lunedi'); ?>
+</div>
+
+    <div class="col-md-1">
+    <?= $form->field($model, 'giorno')->checkbox(array('label'=>'martedi'))
+    ->label('martedi'); ?>
+      </div>
+
+    <div class="col-md-1">
+    <?= $form->field($model, 'giorno')->checkbox(array('label'=>'mercoledi'))
+    ->label('mercoledi'); ?>
+      </div>
+
+    <div class="col-md-1">
+    <?= $form->field($model, 'giorno')->checkbox(array('label'=>'giovedi'))
+    ->label('giovedi'); ?>
+      </div>
+
+    <div class="col-md-1">
+    <?= $form->field($model, 'giorno')->checkbox(array('label'=>'venerdi'))
+    ->label('venerdi'); ?>
+      </div>
+
+    <div class="col-md-1">
+    <?= $form->field($model, 'giorno')->checkbox(array('label'=>'sabato'))
+    ->label('sabato'); ?>
+      </div>
+
+    <div class="col-md-1">
+    <?= $form->field($model, 'giorno')->checkbox(array('label'=>'domenica'))
+    ->label('domenica'); ?>
+  </div>
+
+
+</div>

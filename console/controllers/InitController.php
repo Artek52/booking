@@ -16,7 +16,7 @@ class InitController extends Controller
         $disponibilita = new \common\models\Disponibilita();
 
         //creazione struttura
-        for ( $i = 1; $i <= 2; $i++ )
+        for ( $i = 1; $i <= 20; $i++ )
         {
             $struttura->setIsNewRecord(true);
             $struttura->id = null;
@@ -24,10 +24,10 @@ class InitController extends Controller
             $struttura->nome = $faker->company;
             $struttura->created_by = 1;
             $struttura->save();
-            echo "sto creando la struttura: ". $struttura->nome . "\n";
+            echo "sto creando la struttura: " . $struttura->nome . "\n";
 
             //creazione risorsa
-            for ($j=0; $j<mt_rand(1,2); $j++) {
+            for ($j=0; $j<mt_rand(1,100); $j++) {
                 $risorsa->setIsNewRecord(true);
                 $risorsa->id = null;
                 $risorsa->struttura_id = $struttura->id;
