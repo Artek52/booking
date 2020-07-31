@@ -1,14 +1,14 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Disponibilita;
+use common\models\Disponibilita;
 
 /**
- * backend\models\DisponibilitaSearch represents the model behind the search form about `backend\models\Disponibilita`.
+ * common\models\DisponibilitaSearch represents the model behind the search form about `backend\models\Disponibilita`.
  */
  class DisponibilitaSearch extends Disponibilita
 {

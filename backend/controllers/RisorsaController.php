@@ -3,9 +3,9 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Risorsa;
-use backend\models\Disponibilita;
 use backend\models\RisorsaSearch;
+use backend\models\DisponibilitaSearch;
+use backend\models\Disponibilita;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

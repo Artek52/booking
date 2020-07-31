@@ -12,7 +12,7 @@ class InitController extends Controller
     {
         $faker = \Faker\Factory::create('it_IT');
         $struttura = new \backend\models\Struttura();
-        $risorsa = new \backend\models\Risorsa();
+        $risorsa = new \backend\models\RisorsaSearch();
         $orario = new \backend\models\Orario();
         $disponibilita = new \backend\models\Disponibilita();
 
@@ -44,9 +44,8 @@ class InitController extends Controller
                 $orario->risorsa_id = $risorsa->id;
                 $orario->struttura_id = $struttura->id;
                 $orario->giorno = $faker->dayOfWeek;
-
-                $data1=$faker->date("Y-m-d");
-                $data2=$faker->date("Y-m-d");
+                $data1= $faker->dateTimeBetween( '-1 week', 'now')->format("Y-m-d");
+                $data2 = $faker->dateTimeBetween('-1 week', 'now')->format("Y-m-d");
                 if($data1<$data2){
                   $orario->data_inizio = $data1;
                   $orario->data_fine = $data2;
@@ -175,4 +174,3 @@ class InitController extends Controller
 
 
     }
-?>

@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\RisorsaSearch */
+/* @var $searchModel backend\models\RisorsaSearchSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 use yii\helpers\Html;

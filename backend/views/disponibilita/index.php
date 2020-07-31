@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\DisponibilitaSearch */
+/* @var $searchModel common\models\DisponibilitaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 use yii\helpers\Html;
@@ -42,7 +42,7 @@ $this->registerJs($search);
                     {return NULL;}
                 },
                 'filterType' => GridView::FILTER_SELECT2,
-                'filter' => \yii\helpers\ArrayHelper::map(\backend\models\Risorsa::find()->asArray()->all(), 'id', 'id'),
+                'filter' => \yii\helpers\ArrayHelper::map(\backend\models\RisorsaSearch::find()->asArray()->all(), 'id', 'id'),
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' => true],
                 ],

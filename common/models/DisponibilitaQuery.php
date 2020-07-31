@@ -1,13 +1,13 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 /**
- * This is the ActiveQuery class for [[Prenotazione]].
+ * This is the ActiveQuery class for [[Disponibilita]].
  *
- * @see Prenotazione
+ * @see Disponibilita
  */
-class PrenotazioneQuery extends \yii\db\ActiveQuery
+class DisponibilitaQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -17,7 +17,7 @@ class PrenotazioneQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Prenotazione[]|array
+     * @return Disponibilita[]|array
      */
     public function all($db = null)
     {
@@ -26,7 +26,7 @@ class PrenotazioneQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Prenotazione|array|null
+     * @return Disponibilita|array|null
      */
     public function one($db = null)
     {

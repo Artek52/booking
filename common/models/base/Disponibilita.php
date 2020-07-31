@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models\base;
+namespace common\models\base;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -115,7 +115,7 @@ use yii\behaviors\BlameableBehavior;
  * @property integer $deleted_by
  * @property string $deleted_at
  *
- * @property \backend\models\Risorsa $risorsa
+ * @property \backend\models\RisorsaSearch $risorsa
  */
 class Disponibilita extends \yii\db\ActiveRecord
 {
@@ -127,6 +127,7 @@ class Disponibilita extends \yii\db\ActiveRecord
     public function __construct(){
       if (Yii::$app->id == 'basic') {
         parent::__construct();
+        if(Yii::$app->id == 'basic'){
         $this->_rt_softdelete = [
             'deleted_by' => \Yii::$app->user->id,
             'deleted_at' => date('Y-m-d H:i:s'),
@@ -137,6 +138,9 @@ class Disponibilita extends \yii\db\ActiveRecord
         ];
     }
   }
+
+}
+
 
     /**
     * This function helps \mootensai\relation\RelationTrait runs faster
@@ -294,7 +298,7 @@ class Disponibilita extends \yii\db\ActiveRecord
      */
     public function getRisorsa()
     {
-        return $this->hasOne(\backend\models\Risorsa::className(), ['id' => 'risorsa_id']);
+        return $this->hasOne(\backend\models\RisorsaSearch::className(), ['id' => 'risorsa_id']);
     }
 
     /**
@@ -346,7 +350,7 @@ class Disponibilita extends \yii\db\ActiveRecord
      */
     public static function find()
     {
-        $query = new \backend\models\DisponibilitaQuery(get_called_class());
+        $query = new \common\models\DisponibilitaQuery(get_called_class());
         return $query->where(['disponibilita.deleted_by' => 0]);
     }
 }

@@ -20,7 +20,7 @@ use yii\behaviors\BlameableBehavior;
  * @property string $deleted_at
  * @property integer $lock
  *
- * @property \backend\models\Risorsa[] $risorsas
+ * @property \backend\models\RisorsaSearch[] $risorsas
  */
 class Struttura extends \yii\db\ActiveRecord
 {
@@ -107,7 +107,7 @@ class Struttura extends \yii\db\ActiveRecord
      */
     public function getRisorse()
     {
-        return $this->hasMany(\backend\models\Risorsa::className(), ['struttura_id' => 'id']);
+        return $this->hasMany(\backend\models\RisorsaSearch::className(), ['struttura_id' => 'id']);
     }
 
 
