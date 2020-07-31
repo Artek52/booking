@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\Disponibilita;
 use common\models\DisponibilitaSearch;
+use yii\data\SqlDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -28,7 +29,7 @@ class DisponibilitaController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete','check-on-disponibilita'],
                         'roles' => ['@']
                     ],
                     [
@@ -132,4 +133,34 @@ class DisponibilitaController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-}
+
+    public function actionCheckOnDisponibilita(){
+
+        $Query="";
+        for ($i=0; $i <=22 ; $i++) {
+            foreach (['00', '15', '30', '45'] as $y) {
+                $Query .= "orario_" . substr('0' . $i, -2) . '_' . $y . " = 1 or " ;
+            }
+        }
+        $Query.= "orario_23_00=1 or " .  "orario_23_15=1 or " . "orario_23_30=1 or " . "orario_23_45=1";
+
+        $sQuery ="SELECT * FROM disponibilita WHERE data = '2020-07-25'  AND risorsa_id = 1192 AND  ($Query)";
+        $count = (int) "SELECT count(*) FROM disponibilita WHERE data = '2020-07-25'  AND risorsa_id = 1192 AND  ($Query)";
+
+        echo $count;
+
+
+        $disponibilitaProvider = new SqlDataProvider([
+            "sql" => "$sQuery" ,
+            "totalCount" => "$count",
+            "sort" => [
+                "attributes" => ["risorsa_id","data"],
+            ],
+            "pagination" => [
+                "pageSize" => 20,
+            ],
+        ]);
+
+        return $this->render('controlloDisponibilita.php',["disponibilitaProvider" => $disponibilitaProvider]);
+    }
+    }

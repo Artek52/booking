@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Risorsa */
+/* @var $model backend\models\RisorsaSearch */
 
 $this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Risorsa', 'url' => ['index']];

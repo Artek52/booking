@@ -42,7 +42,7 @@ $this->registerJs($search);
                     {return NULL;}
                 },
                 'filterType' => GridView::FILTER_SELECT2,
-                'filter' => \yii\helpers\ArrayHelper::map(\backend\models\Risorsa::find()->asArray()->all(), 'id', 'nome'),
+                'filter' => \yii\helpers\ArrayHelper::map(\backend\models\RisorsaSearch::find()->asArray()->all(), 'id', 'nome'),
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' => true],
                 ],

@@ -20,7 +20,7 @@ return [
             'class' => 'yii\console\controllers\FixtureController',
             'namespace' => 'common\fixtures',
           ],
-    ],
+        ],
     'components' => [
         'log' => [
             'targets' => [
@@ -32,4 +32,5 @@ return [
         ],
     ],
     'params' => $params,
+
 ];

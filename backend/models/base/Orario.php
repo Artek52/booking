@@ -25,7 +25,7 @@ use yii\behaviors\BlameableBehavior;
  * @property string $deleted_at
  * @property integer $lock
  *
- * @property \backend\models\Risorsa $risorsa
+ * @property \backend\models\RisorsaSearch $risorsa
  * @property \backend\models\Struttura $struttura
  */
 class Orario extends \yii\db\ActiveRecord
@@ -118,7 +118,7 @@ class Orario extends \yii\db\ActiveRecord
      */
     public function getRisorsa()
     {
-        return $this->hasOne(\backend\models\Risorsa::className(), ['id' => 'risorsa_id']);
+        return $this->hasOne(\backend\models\RisorsaSearch::className(), ['id' => 'risorsa_id']);
     }
 
     /**

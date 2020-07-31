@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models\base;
+namespace common\models\base;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -115,7 +115,7 @@ use yii\behaviors\BlameableBehavior;
  * @property integer $deleted_by
  * @property string $deleted_at
  *
- * @property \backend\models\Risorsa $risorsa
+ * @property \backend\models\RisorsaSearch $risorsa
  */
 class Disponibilita extends \yii\db\ActiveRecord
 {
@@ -127,6 +127,7 @@ class Disponibilita extends \yii\db\ActiveRecord
     public function __construct(){
       if (Yii::$app->id == 'basic') {
         parent::__construct();
+        if(Yii::$app->id == 'basic'){
         $this->_rt_softdelete = [
             'deleted_by' => \Yii::$app->user->id,
             'deleted_at' => date('Y-m-d H:i:s'),
@@ -137,6 +138,9 @@ class Disponibilita extends \yii\db\ActiveRecord
         ];
     }
   }
+
+}
+
 
     /**
     * This function helps \mootensai\relation\RelationTrait runs faster
@@ -294,7 +298,7 @@ class Disponibilita extends \yii\db\ActiveRecord
      */
     public function getRisorsa()
     {
-        return $this->hasOne(\backend\models\Risorsa::className(), ['id' => 'risorsa_id']);
+        return $this->hasOne(\backend\models\RisorsaSearch::className(), ['id' => 'risorsa_id']);
     }
 
     /**
@@ -317,6 +321,28 @@ class Disponibilita extends \yii\db\ActiveRecord
             ],
         ];
     }
+
+    /**
+     * The following code shows how to apply a default condition for all queries:
+     *
+     * ```php
+     * class Customer extends ActiveRecord
+     * {
+     *     public static function find()
+     *     {
+     *         return parent::find()->where(['deleted' => false]);
+     *     }
+     * }
+     *
+     * // Use andWhere()/orWhere() to apply the default condition
+     * // SELECT FROM customer WHERE `deleted`=:deleted AND age>30
+     * $customers = Customer::find()->andWhere('age>30')->all();
+     *
+     * // Use where() to ignore the default condition
+     * // SELECT FROM customer WHERE age>30
+     * $customers = Customer::find()->where('age>30')->all();
+     * ```
+     */
 
     /**
      * The following code shows how to apply a default condition for all queries:

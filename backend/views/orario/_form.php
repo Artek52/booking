@@ -30,7 +30,7 @@ use kartik\widgets\TimePicker;
 
   <div class="col-md-2">
     <?= $form->field($model, 'risorsa_id')->widget(\kartik\widgets\Select2::classname(), [
-      'data' => \yii\helpers\ArrayHelper::map(\backend\models\Risorsa::find()->orderBy('id')->asArray()->all(), 'id', 'nome'),
+      'data' => \yii\helpers\ArrayHelper::map(\backend\models\RisorsaSearch::find()->orderBy('id')->asArray()->all(), 'id', 'nome'),
       'options' => ['placeholder' => 'Choose Risorsa'],
       'pluginOptions' => [
         'allowClear' => true

@@ -179,7 +179,7 @@ class Risorsa extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \backend\models\RisorsaQuery the active query used by this AR class.
+     * @return \backend\models\RisorsaSearchQuery the active query used by this AR class.
      */
     public static function find()
     {

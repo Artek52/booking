@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
     <?= $form->field($model, 'risorsa_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Risorsa::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\RisorsaSearch::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
         'options' => ['placeholder' => 'Choose Risorsa'],
         'pluginOptions' => [
             'allowClear' => true

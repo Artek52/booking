@@ -11,7 +11,7 @@ class InitController extends Controller
     {
         $faker = \Faker\Factory::create('it_IT');
         $struttura = new \backend\models\Struttura();
-        $risorsa = new \backend\models\Risorsa();
+        $risorsa = new \backend\models\RisorsaSearch();
         $orario = new \backend\models\Orario();
         $disponibilita = new \common\models\Disponibilita();
 
@@ -158,4 +158,3 @@ class InitController extends Controller
             return false;
         }
     }
-?>

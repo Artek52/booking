@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-use \backend\models\base\Disponibilita as BaseDisponibilita;
+use \common\models\base\Disponibilita as BaseDisponibilita;
 
 /**
  * This is the model class for table "disponibilita".

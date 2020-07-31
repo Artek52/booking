@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Risorsa */
+/* @var $model backend\models\RisorsaSearch */
 
 $this->title = 'Create Risorsa';
 $this->params['breadcrumbs'][] = ['label' => 'Risorsa', 'url' => ['index']];

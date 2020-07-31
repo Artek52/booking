@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-use \backend\models\base\Prenotazione as BasePrenotazione;
+use common\models\base\Prenotazione as BasePrenotazione;
 
 /**
  * This is the model class for table "prenotazione".
