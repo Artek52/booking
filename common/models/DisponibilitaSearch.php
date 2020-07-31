@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use common\models\Disponibilita;
 
 /**
- * common\models\DisponibilitaSearch represents the model behind the search form about `backend\models\Disponibilita`.
+ * common\models\DisponibilitaSearch represents the model behind the search form about `common\models\Disponibilita`.
  */
  class DisponibilitaSearch extends Disponibilita
 {

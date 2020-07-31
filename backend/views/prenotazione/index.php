@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\PrenotazioneSearch */
+/* @var $searchModel common\models\PrenotazioneSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 use yii\helpers\Html;
@@ -28,7 +28,7 @@ $this->registerJs($search);
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
     </div>
-    <?php 
+    <?php
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'visible' => false],
@@ -69,7 +69,7 @@ $this->registerJs($search);
         [
             'class' => 'yii\grid\ActionColumn',
         ],
-    ]; 
+    ];
     ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

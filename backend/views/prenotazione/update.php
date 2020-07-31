@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Prenotazione */
+/* @var $model common\models\Prenotazione */
 
 $this->title = 'Update Prenotazione: ' . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Prenotazione', 'url' => ['index']];

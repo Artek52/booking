@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Prenotazione */
+/* @var $model common\models\Prenotazione */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Prenotazione', 'url' => ['index']];
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <h2><?= 'Prenotazione'.' '. Html::encode($this->title) ?></h2>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
-            
+
             <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('Delete', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="row">
-<?php 
+<?php
     $gridColumn = [
         ['attribute' => 'id', 'visible' => false],
         [
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <h4>Risorsa<?= ' '. Html::encode($this->title) ?></h4>
     </div>
-    <?php 
+    <?php
     $gridColumnRisorsa = [
         ['attribute' => 'id', 'visible' => false],
         'struttura_id',
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <h4>User<?= ' '. Html::encode($this->title) ?></h4>
     </div>
-    <?php 
+    <?php
     $gridColumnUser = [
         ['attribute' => 'id', 'visible' => false],
         'username',

@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Disponibilita */
+/* @var $model common\models\Disponibilita */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Disponibilita', 'url' => ['index']];

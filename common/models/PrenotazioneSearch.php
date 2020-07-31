@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use common\models\Prenotazione;
 
 /**
- * backend\models\PrenotazioneSearch represents the model behind the search form about `backend\models\Prenotazione`.
+ * common\models\PrenotazioneSearch represents the model behind the search form about `common\models\Prenotazione`.
  */
  class PrenotazioneSearch extends Prenotazione
 {
