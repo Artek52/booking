@@ -162,11 +162,11 @@ class Prenotazione extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \backend\models\PrenotazioneQuery the active query used by this AR class.
+     * @return \common\models\PrenotazioneQuery the active query used by this AR class.
      */
     public static function find()
     {
-        $query = new \backend\models\PrenotazioneQuery(get_called_class());
+        $query = new \common\models\PrenotazioneQuery(get_called_class());
         return $query->where(['prenotazione.deleted_by' => 0]);
     }
 }

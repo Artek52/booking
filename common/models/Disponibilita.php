@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use \backend\models\base\Disponibilita as BaseDisponibilita;

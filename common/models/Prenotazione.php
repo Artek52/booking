@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use \backend\models\base\Prenotazione as BasePrenotazione;
@@ -23,5 +23,5 @@ class Prenotazione extends BasePrenotazione
             [['lock'], 'mootensai\components\OptimisticLockValidator']
         ]);
     }
-	
+
 }

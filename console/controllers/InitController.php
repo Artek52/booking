@@ -5,7 +5,6 @@ use Yii;
 use yii\console\Controller;
 
 
-
 class InitController extends Controller
 {
     public function actionAll()
@@ -14,10 +13,10 @@ class InitController extends Controller
         $struttura = new \backend\models\Struttura();
         $risorsa = new \backend\models\Risorsa();
         $orario = new \backend\models\Orario();
-        $disponibilita = new \backend\models\Disponibilita();
+        $disponibilita = new \common\models\Disponibilita();
 
         //creazione struttura
-        for ( $i = 1; $i <= 20; $i++ )
+        for ( $i = 1; $i <= 2; $i++ )
         {
             $struttura->setIsNewRecord(true);
             $struttura->id = null;
@@ -28,11 +27,11 @@ class InitController extends Controller
             echo "sto creando la struttura: ". $struttura->nome . "\n";
 
             //creazione risorsa
-            for ($j=0; $j<mt_rand(1,100); $j++) {
+            for ($j=0; $j<mt_rand(1,2); $j++) {
                 $risorsa->setIsNewRecord(true);
                 $risorsa->id = null;
                 $risorsa->struttura_id = $struttura->id;
-                $risorsa->nome = $faker->company;
+                $risorsa->nome = $faker->companySuffix;
                 $risorsa->created_by = 1;
                 $risorsa->save();
                 echo "--sto creando la risorsa ". $j."\n";
@@ -44,9 +43,8 @@ class InitController extends Controller
                 $orario->risorsa_id = $risorsa->id;
                 $orario->struttura_id = $struttura->id;
                 $orario->giorno = $faker->dayOfWeek;
-
-                $data1=$faker->date("Y-m-d");
-                $data2=$faker->date("Y-m-d");
+                $data1=$faker->dateTimeBetween($startDate = '-2 month ', $endDate = 'now')->format("Y-m-d");
+                $data2=$faker->dateTimeBetween($startDate = '-2 month ', $endDate = 'now')->format("Y-m-d");
                 if($data1<$data2){
                   $orario->data_inizio = $data1;
                   $orario->data_fine = $data2;
@@ -71,19 +69,12 @@ class InitController extends Controller
                 $modelOrario = new \backend\models\Orario();
                 $modelOrario->struttura_id = $orario->struttura_id;
                 $modelOrario->risorsa_id = $risorsa->id;
-
-                if( ! $this->isOrarioInConflitto($modelOrario))
-                {
+                if( ! $this->isOrarioInConflitto($modelOrario)) {
                 echo "------sto creando orario ". $k."\n";
-                echo $orario->data_inizio;
-                echo $orario->data_fine;
                 $data = \DateTime::createFromFormat ('Y-m-d', $orario->data_inizio);
                 $dataFine = \DateTime::createFromFormat ('Y-m-d', $orario->data_fine);
-
                 $ora_inizio = (integer) str_replace(":", "", $orario->inizio_orario);
                 $ora_fine = (integer) str_replace(":", "", $orario->fine_orario);
-                echo $ora_inizio;
-                echo $ora_fine;
 
                     //creazione disponibilita
                     while ($data->diff($dataFine)->format('%r%a') > 0) {
@@ -105,19 +96,15 @@ class InitController extends Controller
                       }
                       $orario->save();
                       $disponibilita->save();
-                    echo "---------sto creando disponibilita " . $l . "\n";
-                    $data->add(new \DateInterval('P7D'));
-                   }
+                      $data->add(new \DateInterval('P7D'));
+                    }
                   }
                 }
-
               }
             }
         }
 
-
         private function isOrarioInConflitto($orario) {
-
             $conflitti= \backend\models\Orario::find()
                 ->andWhere(['giorno' => $orario->giorno])
                 ->andWhere(['struttura_id' => $orario->struttura_id])
@@ -165,14 +152,10 @@ class InitController extends Controller
             if ($orario->id!=null)
                 $conflitti->andWhere(['<>','id',$orario->id]);
 
-
             if ($conflitti->count() >0)
                 return true;
 
             return false;
         }
-
-
-
     }
 ?>

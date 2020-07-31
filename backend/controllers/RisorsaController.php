@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Risorsa;
-use backend\models\Disponibilita;
+use common\models\Disponibilita;
 use backend\models\RisorsaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -75,7 +75,7 @@ class RisorsaController extends Controller
                 $ora_fine = (integer) str_replace(":", "", $modelOrario->fine_orario);
 
                 while ($data->diff($dataFine)->format('%r%a') > 0) {
-                    $modelDisponibilita = new \backend\models\Disponibilita();
+                    $modelDisponibilita = new \common\models\Disponibilita();
                     $modelDisponibilita->risorsa_id = $model->id;
                     $modelDisponibilita->data = $data->format('Y-m-d');
 

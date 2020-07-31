@@ -19,8 +19,8 @@ use yii\behaviors\BlameableBehavior;
  * @property integer $deleted_by
  * @property string $deleted_at
  *
- * @property \backend\models\Disponibilita[] $disponibilitas
- * @property \backend\models\Prenotazione[] $prenotaziones
+ * @property \common\models\Disponibilita[] $disponibilitas
+ * @property \common\models\Prenotazione[] $prenotaziones
  * @property \backend\models\Struttura $struttura
  */
 class Risorsa extends \yii\db\ActiveRecord
@@ -107,7 +107,7 @@ class Risorsa extends \yii\db\ActiveRecord
      */
     public function getDisponibilitas()
     {
-        return $this->hasMany(\backend\models\Disponibilita::className(), ['risorsa_id' => 'id']);
+        return $this->hasMany(\common\models\Disponibilita::className(), ['risorsa_id' => 'id']);
     }
 
     /**
@@ -115,7 +115,7 @@ class Risorsa extends \yii\db\ActiveRecord
      */
     public function getPrenotaziones()
     {
-        return $this->hasMany(\backend\models\Prenotazione::className(), ['risorsa_id' => 'id']);
+        return $this->hasMany(\common\models\Prenotazione::className(), ['risorsa_id' => 'id']);
     }
 
     /**
