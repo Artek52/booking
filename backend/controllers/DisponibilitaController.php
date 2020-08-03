@@ -9,6 +9,7 @@ use yii\data\SqlDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\SearchForm;
 
 /**
  * DisponibilitaController implements the CRUD actions for Disponibilita model.
@@ -134,29 +135,64 @@ class DisponibilitaController extends Controller
         }
     }
 
-    public function actionCheckOnDisponibilita(){
+    public function actionCheckOnDisponibilita()
+    {
+        $model = new SearchForm();
 
-        $Query="";
-        for ($i=0; $i <=22 ; $i++) {
-            foreach (['00', '15', '30', '45'] as $y) {
-                $Query .= "orario_" . substr('0' . $i, -2) . '_' . $y . " = 1 or " ;
-            }
+        if ($model->load(Yii::$app->request->post())) {
+
+          $ora_inizio = \DateTime::createFromFormat ("H:i", $model->inizio_orario);
+          $ora_fine = \DateTime::createFromFormat ("H:i", $model->fine_orario);
+          $int_ora_inizio = (integer) str_replace(":*", "", $model->inizio_orario);
+          $int_ora_fine = (integer) str_replace(":*", "", $model->fine_orario);
+
+              $Query="";
+              $aQuery="";
+              for ($i= $int_ora_inizio; $i <= $int_ora_fine ; $i++) {
+                  foreach (['00', '15', '30', '45'] as $y) {
+                      $Query .= "orario_" . substr('0' . $i, -2) . '_' . $y . " = 1 and " ;
+                      $aQuery .= "orario_" . substr('0' . $i, -2) . '_' . $y .", ";
+                  }
+              }
+
+              $Query = substr($Query, 0 , -5);
+              $aQuery = substr($aQuery, 0 , -2);
+
+              $sQuery ="SELECT $aQuery FROM disponibilita WHERE data = '$model->data'  AND  ($Query)";
+              $count = (int) "SELECT count(*) FROM disponibilita WHERE data = '2020-07-25'  AND risorsa_id = 1192 AND  ($Query)";
+
+
+
+              $disponibilitaProvider = new SqlDataProvider([
+                  "sql" => "$sQuery" ,
+                  "totalCount" => "$count",
+                  "sort" => [
+                      "attributes" => ["risorsa_id","data"],
+                  ],
+                  "pagination" => [
+                      "pageSize" => 20,
+                  ],
+              ]);
+
+            return $this->render('controlloDisponibilita',
+              ['disponibilitaProvider' => $disponibilitaProvider,
+            ]);
+
+        } else {
+            return $this->render('search', [
+                'model' => $model,
+            ]);
         }
-        $Query.= "orario_23_00=1 or " .  "orario_23_15=1 or " . "orario_23_30=1 or " . "orario_23_45=1";
-        $sQuery ="SELECT * FROM disponibilita WHERE data = '2020-07-19'  AND risorsa_id = 232 AND  ($Query)";
-        $count = (int) "SELECT count(*) FROM disponibilita WHERE data = '2020-07-19'  AND risorsa_id = 232 AND  ($Query)";
-
-        $disponibilitaProvider = new SqlDataProvider([
-            "sql" => "$sQuery" ,
-            "totalCount" => "$count",
-            "sort" => [
-                "attributes" => ["risorsa_id","data"],
-            ],
-            "pagination" => [
-                "pageSize" => 20,
-            ],
-        ]);
-
-        return $this->render('controlloDisponibilita.php',["disponibilitaProvider" => $disponibilitaProvider]);
     }
-  }
+
+    // public function actionCheckOnDisponibilita(){
+    //
+    //     $searchFormModel = new SearchForm();
+    //     $this->render('search', ['searchFormModel' => $searchFormModel]);
+    //     if($searchFormModel->load(Yii::$app->request->post()) && $searchFormModel->validate())
+    //     {
+    //
+    //     return $this->render('controlloDisponibilita.php',["disponibilitaProvider" => $disponibilitaProvider]);
+    //     }
+    // }
+    }
