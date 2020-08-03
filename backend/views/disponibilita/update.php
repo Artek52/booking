@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Disponibilita */
+/* @var $model common\models\Disponibilita */
 
 $this->title = 'Update Disponibilita: ' . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Disponibilita', 'url' => ['index']];

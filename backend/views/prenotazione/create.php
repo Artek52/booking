@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Prenotazione */
+/* @var $model common\models\Prenotazione */
 
 $this->title = 'Create Prenotazione';
 $this->params['breadcrumbs'][] = ['label' => 'Prenotazione', 'url' => ['index']];

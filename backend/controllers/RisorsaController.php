@@ -3,12 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
+use backend\controllers\DisponibilitaController;
 use backend\models\RisorsaSearch;
-use backend\models\DisponibilitaSearch;
-use backend\models\Disponibilita;
+use backend\models\Risorsa;
+use common\models\DisponibilitaSearch;
+use common\models\Disponibilita;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\SqlDataProvider;
+
 
 /**
  * RisorsaController implements the CRUD actions for Risorsa model.
@@ -29,7 +33,7 @@ class RisorsaController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-disponibilita', 'add-prenotazione'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-disponibilita', 'add-prenotazione', 'check-on-disponibilita'],
                         'roles' => ['@']
                     ],
                     [
@@ -263,26 +267,29 @@ class RisorsaController extends Controller
         }
     }
 
-    /**
-     * Action to load a tabular form grid
-     * for Prenotazione
-     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-     *
-     * @return mixed
-     */
-    public function actionAddPrenotazione()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('Prenotazione');
-            if (!empty($row)) {
-                $row = array_values($row);
+    public function actionCheckOnDisponibilita(){
+
+        $Query="";
+        for ($i=0; $i <=22 ; $i++) {
+            foreach (['00', '15', '30', '45'] as $y) {
+                $Query .= "orario_" . substr('0' . $i, -2) . '_' . $y . " = 1 or " ;
             }
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formPrenotazione', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+        $Query.= "orario_23_00=1 or " .  "orario_23_15=1 or " . "orario_23_30=1 or " . "orario_23_45=1";
+        $sQuery ="SELECT * FROM disponibilita WHERE data = '2020-07-19'  AND risorsa_id = 232 AND  ($Query)";
+        $count = (int) "SELECT count(*) FROM disponibilita WHERE data = '2020-07-19'  AND risorsa_id = 232 AND  ($Query)";
+
+        $disponibilitaProvider = new SqlDataProvider([
+            "sql" => "$sQuery" ,
+            "totalCount" => "$count",
+            "sort" => [
+                "attributes" => ["risorsa_id","data"],
+            ],
+            "pagination" => [
+                "pageSize" => 20,
+            ],
+        ]);
+
+        return $this->render('controlloDisponibilita.php',["disponibilitaProvider" => $disponibilitaProvider]);
     }
 }
