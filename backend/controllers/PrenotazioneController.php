@@ -117,6 +117,23 @@ class PrenotazioneController extends Controller
         return $this->redirect(['index']);
     }
 
+
+    public function checkOnPrenotazioni(){
+      $model = new SearchFormDisponibilita();
+      if($model->load(Yii::$app->request->post()){
+        $rows = (new \yii\db\Query())
+        ->select(['id'])
+        ->from('prenotazione')
+        ->where('risorsa_id = :risorsaId')
+        ->andWhere('data_inizio > data_corrente')
+        ->andwhere('data_corrente <  data_fine');
+
+
+        $this-> render('controlloPrenotazione',['provider' => $prenotazioniProvider]);
+      }
+      else
+        $this-> render('PrenotazioneSearch',['model' => $model]);
+      }
     /**
      * Finds the Prenotazione model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
