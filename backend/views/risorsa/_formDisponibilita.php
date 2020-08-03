@@ -132,7 +132,6 @@ echo TabularForm::widget([
         'orario_23_15' => ['type' => TabularForm::INPUT_TEXT],
         'orario_23_30' => ['type' => TabularForm::INPUT_TEXT],
         'orario_23_45' => ['type' => TabularForm::INPUT_TEXT],
-        'orario_24_00' => ['type' => TabularForm::INPUT_TEXT],
         'del' => [
             'type' => 'raw',
             'label' => '',
@@ -155,4 +154,3 @@ echo TabularForm::widget([
 ]);
 echo  "    </div>\n\n";
 ?>
-

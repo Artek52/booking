@@ -143,12 +143,8 @@ class DisponibilitaController extends Controller
             }
         }
         $Query.= "orario_23_00=1 or " .  "orario_23_15=1 or " . "orario_23_30=1 or " . "orario_23_45=1";
-
-        $sQuery ="SELECT * FROM disponibilita WHERE data = '2020-07-25'  AND risorsa_id = 1192 AND  ($Query)";
-        $count = (int) "SELECT count(*) FROM disponibilita WHERE data = '2020-07-25'  AND risorsa_id = 1192 AND  ($Query)";
-
-        echo $count;
-
+        $sQuery ="SELECT * FROM disponibilita WHERE data = '2020-07-19'  AND risorsa_id = 232 AND  ($Query)";
+        $count = (int) "SELECT count(*) FROM disponibilita WHERE data = '2020-07-19'  AND risorsa_id = 232 AND  ($Query)";
 
         $disponibilitaProvider = new SqlDataProvider([
             "sql" => "$sQuery" ,
@@ -163,4 +159,4 @@ class DisponibilitaController extends Controller
 
         return $this->render('controlloDisponibilita.php',["disponibilitaProvider" => $disponibilitaProvider]);
     }
-    }
+  }
