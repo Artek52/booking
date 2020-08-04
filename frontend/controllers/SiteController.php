@@ -288,4 +288,23 @@ class SiteController extends Controller
       ]);
 
     }
+
+      public function actionDetailRisorse($id){
+        $model = Risorsa::findOne(['id' => $id]);
+        $disponibilitaProvider = new ActiveDataProvider([
+          'query' => $model->getDisponibilita(),
+          'pagination' => [
+            'pageSize' => 5,
+          ],
+        ]);
+
+        return $this->render('risorsaDetails', [
+          'model' => $model,
+          'disponibilitaProvider' => $disponibilitaProvider
+        ]);
+
+
+
+      }
+
 }

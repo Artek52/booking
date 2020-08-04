@@ -105,7 +105,7 @@ class Risorsa extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDisponibilitas()
+    public function getDisponibilita()
     {
         return $this->hasMany(\common\models\Disponibilita::className(), ['risorsa_id' => 'id']);
     }
@@ -113,7 +113,7 @@ class Risorsa extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPrenotaziones()
+    public function getPrenotazione()
     {
         return $this->hasMany(\common\models\Prenotazione::className(), ['risorsa_id' => 'id']);
     }
@@ -179,7 +179,7 @@ class Risorsa extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \backend\models\RisorsaSearchQuery the active query used by this AR class.
+     * @return \backend\models\RisorsaQuery the active query used by this AR class.
      */
     public static function find()
     {
