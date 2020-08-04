@@ -107,7 +107,7 @@ class Struttura extends \yii\db\ActiveRecord
      */
     public function getRisorse()
     {
-        return $this->hasMany(\backend\models\RisorsaSearch::className(), ['struttura_id' => 'id']);
+        return $this->hasMany(\backend\models\Risorsa::className(), ['struttura_id' => 'id']);
     }
 
 

@@ -14,6 +14,9 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use backend\models\Struttura;
+use backend\models\Risorsa;
+use yii\data\ActiveDataProvider;
 
 /**
  * Site controller
@@ -74,8 +77,19 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
-    }
+        // return $this->render('index')
+        // public function actionListStruttura(){
+          $model = Struttura::find();
+          $dataProvider = new ActiveDataProvider([
+            'query' => $model,
+            'pagination' => [
+              'pageSize' => 5,
+            ],
+          ]);
+          return $this->render('index', ['dataProvider' => $dataProvider]);
+        }
+    //}
+
 
     /**
      * Logs in a user.
@@ -256,5 +270,22 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function actionDetailStruttura($id){
+      $model = Struttura::findOne(['id' => $id]);
+
+      $risorsaProvider = new ActiveDataProvider([
+        'query' => $model->getRisorse(),
+        'pagination' => [
+          'pageSize' => 5,
+        ],
+      ]);
+
+      return $this->render('strutturaDetails', [
+        'model' => $model,
+        'risorsaProvider' => $risorsaProvider
+      ]);
+
     }
 }

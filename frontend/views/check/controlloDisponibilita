@@ -1,9 +1,0 @@
-<?php
-
-echo ListView::widget([
-    'dataProvider' => $disponibilitaProvider,
-    'itemView' => '_post',
-]);
-
-
-?>

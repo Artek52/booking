@@ -28,7 +28,7 @@ class StrutturaController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-risorsa'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-risorsa', 'list-struttura'],
                         'roles' => ['@']
                     ],
                     [
@@ -230,5 +230,16 @@ class StrutturaController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionListStruttura(){
+      $model = Struttura::find();
+      $dataProvider = new ActiveDataProvider([
+        'query' => $model,
+        'pagination' => [
+          'pageSize' => 10,
+        ],
+      ]);
+      return $this->render('frontend/views/site/index', ['dataProvider' => $dataProvider]);
     }
 }
