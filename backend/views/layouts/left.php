@@ -36,6 +36,8 @@
                     ["label" => "Orari", 'url' => ['/orario']],
                     ["label" => "Risorse", 'url' => ['/risorsa']],
                     ["label" => "Strutture", 'url' => ['/struttura']],
+                    ["label" => "Cerca Disponibilita", 'url' => ['/disponibilita/check-on-disponibilita']],
+                    ["label" => "Cerca Prenotazione", 'url' => ['/prenotazione/check-on-prenotazioni']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
             ]
         ]) ?>

@@ -108,7 +108,15 @@ class Prenotazione extends \yii\db\ActiveRecord
      */
     public function getRisorsa()
     {
-        return $this->hasOne(\backend\models\RisorsaSearch::className(), ['id' => 'risorsa_id']);
+        return $this->hasOne(\backend\models\Risorsa::className(), ['id' => 'risorsa_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStruttura()
+    {
+        return $this->hasOne(\backend\models\Struttura::className(), ['id' => 'struttura_id'])->via('risorsa');
     }
 
     /**

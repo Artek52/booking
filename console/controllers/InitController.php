@@ -11,7 +11,8 @@ class InitController extends Controller
     {
         $faker = \Faker\Factory::create('it_IT');
         $struttura = new \backend\models\Struttura();
-        $risorsa = new \backend\models\RisorsaSearch();
+        $risorsa = new \backend\models\Risorsa();
+        $prenotazione = new \common\models\Prenotazione();
         $orario = new \backend\models\Orario();
         $disponibilita = new \common\models\Disponibilita();
 
@@ -100,6 +101,16 @@ class InitController extends Controller
                     }
                   }
                 }
+              }
+
+              for($i = 0 ; $i < 20 ; $i++){
+                $prenotazione->setIsNewRecord(true);
+                $prenotazione->id = null;
+                $prenotazione->risorsa_id = mt_rand(1,20);
+                $prenotazione->user_id = mt_rand(1,2);
+                $prenotazione->data_inizio = $faker->dateTimeBetween('-2 month ' , 'now')->format('Y-m-d-h-i') ;
+                $prenotazione->data_fine = $faker->dateTimeBetween('-2 month' , 'now')->format('Y-m-d-h-i') ;
+                $prenotazione->save();
               }
             }
         }

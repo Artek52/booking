@@ -8,6 +8,8 @@ use common\models\PrenotazioneSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\SearchFormPrenotazione;
+use yii\data\ActiveDataProvider;
 
 /**
  * PrenotazioneController implements the CRUD actions for Prenotazione model.
@@ -28,7 +30,7 @@ class PrenotazioneController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete','check-on-prenotazioni'],
                         'roles' => ['@']
                     ],
                     [
@@ -118,21 +120,28 @@ class PrenotazioneController extends Controller
     }
 
 
-    public function checkOnPrenotazioni(){
-      $model = new SearchFormDisponibilita();
-      if($model->load(Yii::$app->request->post()){
-        $rows = (new \yii\db\Query())
-        ->select(['id'])
-        ->from('prenotazione')
-        ->where('risorsa_id = :risorsaId')
-        ->andWhere('data_inizio > data_corrente')
-        ->andwhere('data_corrente <  data_fine');
+    public function actionCheckOnPrenotazioni(){
+      $model = new SearchFormPrenotazione();
+
+      if($model->load(Yii::$app->request->post())){
+        $rows = \common\models\Prenotazione::find()
+        ->andWhere(['risorsa_id' => 11])
+        ->andWhere([ '<=', 'data_inizio', $model->data_corrente])
+        ->andWhere([ '>=', 'data_fine', $model->data_corrente]);
 
 
-        $this-> render('controlloPrenotazione',['provider' => $prenotazioniProvider]);
+        $prenotazioniProvider = new ActiveDataProvider([
+          'query' => $rows,
+          'pagination' => [
+            'pageSize' => 20,
+          ],
+        ]);
+        return $this-> render('controlloPrenotazione',['provider' => $prenotazioniProvider]);
       }
+
       else
-        $this-> render('PrenotazioneSearch',['model' => $model]);
+        return $this-> render('prenotazioneSearch',['model' => $model]);
+
       }
     /**
      * Finds the Prenotazione model based on its primary key value.
