@@ -7,6 +7,6 @@ use yii\helpers\HtmlPurifier;
 
     <?= HtmlPurifier::process($model->indirizzo) ?>
 
-    <?= Html::a('<b>visualizza</b>', ['detail-struttura', 'id' => $model->id], ['target' => '_blank']) ?>
+    <?= Html::a('<b>visualizza</b>', ['detail-struttura', 'id' => $model->id]) ?>
 
 </div>

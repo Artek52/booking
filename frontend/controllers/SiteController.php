@@ -17,6 +17,10 @@ use frontend\models\ContactForm;
 use backend\models\Struttura;
 use backend\models\Risorsa;
 use yii\data\ActiveDataProvider;
+use common\models\SearchForm;
+use common\models\Disponibilita;
+
+
 
 /**
  * Site controller
@@ -291,8 +295,9 @@ class SiteController extends Controller
 
       public function actionDetailRisorse($id){
         $model = Risorsa::findOne(['id' => $id]);
+        // ->where();
         $disponibilitaProvider = new ActiveDataProvider([
-          'query' => $model->getDisponibilita(),
+          'query' => $model->getOrari(),
           'pagination' => [
             'pageSize' => 5,
           ],
@@ -306,5 +311,42 @@ class SiteController extends Controller
 
 
       }
+
+       public function actionDetailDisponibilita($id){
+
+           $model = new searchForm();
+           if($model->load(Yii::$app->request->post())){
+           $ora_inizio = \DateTime::createFromFormat ("H:i", $model->inizio_orario);
+           $ora_fine = \DateTime::createFromFormat ("H:i", $model->fine_orario);
+           $int_ora_inizio = (integer) str_replace(":*", "", $model->inizio_orario);
+           $int_ora_fine = (integer) str_replace(":*", "", $model->fine_orario);
+
+               $Query="";
+               for ($i = $int_ora_inizio; $i <= $int_ora_fine ; $i++) {
+                   foreach (['00', '15', '30', '45'] as $y) {
+                       $Query .= "orario_" . substr('0' . $i, -2) . '_' . $y . " = 0 and " ;
+
+                   }
+               }
+
+               $Query = substr($Query, 0 , -5);
+
+           $modelDisponibilita = Disponibilita::find(['id' => $id])
+           ->where($Query);
+           $disponibilitaProvider = new ActiveDataProvider([
+             'query' => $modelDisponibilita,
+             'pagination' => [
+               'pageSize' => 5,
+             ],
+           ]);
+
+           return $this->render('viewDisponibilita', [
+             'model' => $modelDisponibilita->asArray(true),
+             'disponibilitaProvider' => $disponibilitaProvider
+           ]);
+       }
+       else
+            return $this->render('search.php', ['model' => $model]);
+}
 
 }
