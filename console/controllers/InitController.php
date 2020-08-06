@@ -106,8 +106,8 @@ class InitController extends Controller
               for($i = 0 ; $i < 20 ; $i++){
                 $prenotazione->setIsNewRecord(true);
                 $prenotazione->id = null;
-                $prenotazione->risorsa_id = mt_rand(1,20);
-                $prenotazione->user_id = mt_rand(1,2);
+                $prenotazione->risorsa_id = mt_rand(1,232);
+                $prenotazione->user_id = 1;
                 $prenotazione->data_inizio = $faker->dateTimeBetween('-2 month ' , 'now')->format('Y-m-d-h-i') ;
                 $prenotazione->data_fine = $faker->dateTimeBetween('-2 month' , 'now')->format('Y-m-d-h-i') ;
                 $prenotazione->save();

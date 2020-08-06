@@ -7,6 +7,7 @@ use backend\models\Risorsa;
 use yii\widgets\ListView;
 use yii\widgets\DetailView;
 
+$this->title = 'Risorse';
 
 ?>
 

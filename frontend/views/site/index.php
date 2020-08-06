@@ -5,7 +5,7 @@ use yii\data\ActiveDataProvider;
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Strutture';
 ?>
 <div class="site-index">
 
