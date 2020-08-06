@@ -2,6 +2,8 @@
 
 use yii\widgets\ListView;
 use yii\data\ActiveDataProvider;
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 
@@ -14,7 +16,15 @@ $this->title = 'Strutture';
 
         <p class="lead">digita struttura</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Invia</a></p>
+        <?php $form = ActiveForm::begin(); ?>
+        <?=
+
+            $form->field($formModel, 'nome')->textInput();
+        ?>
+
+        <?= Html::submitButton('prova') ?>
+
+        <?php ActiveForm::end(); ?>
     </div>
 
     <div class="body-content">
