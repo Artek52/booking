@@ -330,42 +330,47 @@ class SiteController extends Controller
 
       }
 
-       public function actionDetailDisponibilita($id){
+      public function actionDetailDisponibilita($id){
 
-           $model = new searchForm();
-           if($model->load(Yii::$app->request->post())){
-           $ora_inizio = \DateTime::createFromFormat ("H:i", $model->inizio_orario);
-           $ora_fine = \DateTime::createFromFormat ("H:i", $model->fine_orario);
-           $int_ora_inizio = (integer) str_replace(":*", "", $model->inizio_orario);
-           $int_ora_fine = (integer) str_replace(":*", "", $model->fine_orario);
+          $model = new searchForm();
+          if($model->load(Yii::$app->request->post())){
+              $ora_inizio = \DateTime::createFromFormat ("H:i", $model->inizio_orario);
+              $ora_fine = \DateTime::createFromFormat ("H:i", $model->fine_orario);
+              $int_ora_inizio = (integer) str_replace(":*", "", $model->inizio_orario);
+              $int_ora_fine = (integer) str_replace(":*", "", $model->fine_orario);
 
-               $Query="";
-               for ($i = $int_ora_inizio; $i <= $int_ora_fine ; $i++) {
-                   foreach (['00', '15', '30', '45'] as $y) {
-                       $Query .= "orario_" . substr('0' . $i, -2) . '_' . $y . " = 0 and " ;
+              $Query="";
+              $aQuery="";
+              for ($i = $int_ora_inizio; $i <= $int_ora_fine ; $i++) {
+                  foreach (['00', '15', '30', '45'] as $y) {
+                      $Query .= "orario_" . substr('0' . $i, -2) . '_' . $y . " = 0 or " ;
+                      $aQuery .= "orario_" . substr('0' . $i, -2) . '_' . $y .", ";
+                  }
+              }
+              $aQuery = substr($aQuery, 0 , -2);
+              $Query = substr($Query, 0 , -4);
+              $modelDisponibilita = Disponibilita::find(['id' => $id])
+              ->select('id, ' . $aQuery)
+              ->where($Query)
+              ->andWhere(['>=', 'data', $model->data]);
+              //->Where(['id' => $id]);
 
-                   }
-               }
+              $disponibilitaProvider = new ActiveDataProvider([
+                  'query' => $modelDisponibilita,
+                  'pagination' => [
+                      'pageSize' => 5,
+                  ],
+              ]);
 
-               $Query = substr($Query, 0 , -5);
+              return $this->render('viewDisponibilita', [
+                  'model' => $modelDisponibilita->asArray(true),
+                  'disponibilitaProvider' => $disponibilitaProvider, 'select' => $aQuery
+              ]);
+          } else {
+              return $this->render('search.php', ['model' => $model]);
 
-           $modelDisponibilita = Disponibilita::find(['id' => $id])
-           ->where($Query);
-           $disponibilitaProvider = new ActiveDataProvider([
-             'query' => $modelDisponibilita,
-             'pagination' => [
-               'pageSize' => 5,
-             ],
-           ]);
-
-           return $this->render('viewDisponibilita', [
-             'model' => $modelDisponibilita->asArray(true),
-             'disponibilitaProvider' => $disponibilitaProvider
-           ]);
-       }
-       else
-            return $this->render('search.php', ['model' => $model]);
-}
+          }
+      }
             public function search($params)
             {
                 $query = Struttura::find();
