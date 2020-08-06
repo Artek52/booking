@@ -364,13 +364,15 @@ class SiteController extends Controller
 
               return $this->render('viewDisponibilita', [
                   'model' => $modelDisponibilita->asArray(true),
-                  'disponibilitaProvider' => $disponibilitaProvider, 'select' => $aQuery
+                  'disponibilitaProvider' => $disponibilitaProvider,
               ]);
           } else {
-              return $this->render('search.php', ['model' => $model]);
+
+                  return $this->render('search.php', ['model' => $model]);
+
+              }
 
           }
-      }
             public function search($params)
             {
                 $query = Struttura::find();

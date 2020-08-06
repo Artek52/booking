@@ -20,4 +20,6 @@ ListView::widget([
     'dataProvider' => $disponibilitaProvider,
     'itemView' => '_disponibilitaDetails'
 ]);
+
+
 ?>
