@@ -81,18 +81,36 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        // return $this->render('index')
-        // public function actionListStruttura(){
-          $model = Struttura::find();
+        $model = Struttura::find();
+        $formModel = new Struttura();
+
+        if ($formModel->load(Yii::$app->request->post())) {
+
+            $query = $model;
+            $query->andFilterWhere([
+                'nome' => $formModel->nome,
+            ]);
+
+            $dataProvider = new ActiveDataProvider([
+              'query' => $model,
+              'pagination' => [
+                'pageSize' => 5,
+              ],
+            ]);
+            return $this->render('index', ['dataProvider' => $dataProvider , 'model' => $model , 'formModel' => $formModel]);
+        }
+
+        else
+        {
           $dataProvider = new ActiveDataProvider([
             'query' => $model,
             'pagination' => [
               'pageSize' => 5,
             ],
           ]);
-          return $this->render('index', ['dataProvider' => $dataProvider]);
+          return $this->render('index', ['dataProvider' => $dataProvider , 'model' => $model , 'formModel' => $formModel]);
+      }
         }
-    //}
 
 
     /**
@@ -348,5 +366,35 @@ class SiteController extends Controller
        else
             return $this->render('search.php', ['model' => $model]);
 }
+            public function search($params)
+            {
+                $query = Struttura::find();
 
+                $dataProvider = new ActiveDataProvider([
+                    'query' => $query,
+                ]);
+
+                $this->load($params);
+
+                if (!$this->validate()) {
+                    // uncomment the following line if you do not want to return any records when validation fails
+                    // $query->where('0=1');
+                    return $dataProvider;
+                }
+
+                $query->andFilterWhere([
+                    'id' => $this->id,
+                    'created_at' => $this->created_at,
+                    'updated_at' => $this->updated_at,
+                    'created_by' => $this->created_by,
+                    'updated_by' => $this->updated_by,
+                    'deleted_by' => $this->deleted_by,
+                    'deleted_at' => $this->deleted_at,
+                ]);
+
+                $query->andFilterWhere(['like', 'nome', $this->nome])
+                    ->andFilterWhere(['like', 'indirizzo', $this->indirizzo]);
+
+                return $dataProvider;
+            }
 }
