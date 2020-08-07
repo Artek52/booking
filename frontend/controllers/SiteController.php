@@ -347,24 +347,19 @@ class SiteController extends Controller
                       $aQuery .= "orario_" . substr('0' . $i, -2) . '_' . $y .", ";
                   }
               }
+
               $aQuery = substr($aQuery, 0 , -2);
+
               $Query = substr($Query, 0 , -4);
-              $modelDisponibilita = Disponibilita::find(['id' => $id])
-              ->select('id, ' . $aQuery)
-              ->where($Query)
-              ->andWhere(['>=', 'data', $model->data]);
-              //->Where(['id' => $id]);
 
-              $disponibilitaProvider = new ActiveDataProvider([
-                  'query' => $modelDisponibilita,
-                  'pagination' => [
-                      'pageSize' => 5,
-                  ],
-              ]);
+              $modelDisponibilita = Disponibilita::find([$id])
+              ->andWhere(['=', 'data', $model->data])
+              ->all();
 
+              $risorsa = $modelDisponibilita;
               return $this->render('_disponibilitaDetails', [
-                  'model' => $modelDisponibilita->asArray(true),
-                  'disponibilitaProvider' => $disponibilitaProvider,
+                  'model' => $modelDisponibilita,
+                  'risorsa' => $risorsa
               ]);
           } else {
 

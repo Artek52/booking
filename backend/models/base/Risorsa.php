@@ -51,8 +51,8 @@ class Risorsa extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'disponibilitas',
-            'prenotaziones',
+            'disponibilita',
+            'prenotazione',
             'struttura'
         ];
     }
