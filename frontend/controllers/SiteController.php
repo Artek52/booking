@@ -362,7 +362,7 @@ class SiteController extends Controller
                   ],
               ]);
 
-              return $this->render('viewDisponibilita', [
+              return $this->render('_disponibilitaDetails', [
                   'model' => $modelDisponibilita->asArray(true),
                   'disponibilitaProvider' => $disponibilitaProvider,
               ]);

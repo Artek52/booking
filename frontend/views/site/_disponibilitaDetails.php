@@ -10,8 +10,8 @@ use yii\helpers\HtmlPurifier;
         <thead>
             <tr>
              <?= "<th scope='row'> # </th>" ?>
-             <?= "<th scope='row'> risorsa1 </th>" ?>
-             <?= "<th scope='row'> risorsa2 </th>" ?>
+             <?= "<th scope='row'> dtgj </th>" ?>
+             <?= "<th scope='row'> jdtgf </th>" ?>
             </tr>
          </thead>
           <?php for ($i=0; $i <=23 ; $i++) :
