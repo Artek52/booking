@@ -1,0 +1,13 @@
+.whatever{
+    background-color: red;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+}
+.well input[type=checkbox]{
+    display: none;
+}
+
+.well input[type=checkbox]:checked + .whatever{
+    background-color: blue;
+}

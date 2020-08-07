@@ -19,7 +19,7 @@ use backend\models\Risorsa;
 use yii\data\ActiveDataProvider;
 use common\models\SearchForm;
 use common\models\Disponibilita;
-
+use common\models\Prenotazione;
 
 
 /**
@@ -329,6 +329,11 @@ class SiteController extends Controller
 
 
       }
+      public function actionCreaPrenotazione($risorsa_id){
+        $model = new Prenotazione();
+
+      }
+
 
       public function actionDetailDisponibilita($id){
 

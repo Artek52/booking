@@ -22,6 +22,7 @@ return [
     ],
     'components' => [
         'request' => [
+            'enableCsrfValidation'=>false,
             'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
