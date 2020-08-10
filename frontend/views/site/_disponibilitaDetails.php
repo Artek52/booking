@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 ?>
 
 <style>
@@ -27,12 +28,10 @@ use yii\widgets\ActiveForm;
             <?php endfor; ?>
         </tr>
     </thead>
-
-    <?php $form = ActiveForm::begin([
-        'action' =>['site/crea-prenotazione'],
-        'attributes' => [$model[0]->risorsa->id],
-
-    ]);
+    <?php
+     $form = ActiveForm::begin([
+        'action' => Url::to(['site/crea-prenotazione', 'id' => $id])
+     ]);
     ?>
         <?php for ($i=0; $i <=23 ; $i++) :
                 foreach (['00', '15', '30', '45'] as $y) :

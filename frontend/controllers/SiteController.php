@@ -329,14 +329,15 @@ class SiteController extends Controller
 
 
       }
-      public function actionCreaPrenotazione($risorsa_id){
+      public function actionCreaPrenotazione($id){
         $model = new Prenotazione();
-
+        echo "$id";
       }
 
 
       public function actionDetailDisponibilita($id){
 
+        //die(var_dump($id));
           $model = new searchForm();
           if($model->load(Yii::$app->request->post())){
               $ora_inizio = \DateTime::createFromFormat ("H:i", $model->inizio_orario);
@@ -364,12 +365,12 @@ class SiteController extends Controller
               $risorsa = $modelDisponibilita;
               return $this->render('_disponibilitaDetails', [
                   'model' => $modelDisponibilita,
-                  'risorsa' => $risorsa
+                  'risorsa' => $risorsa,
+                  'id' => $id
               ]);
           } else {
 
                   return $this->render('search.php', ['model' => $model]);
-
               }
 
           }
